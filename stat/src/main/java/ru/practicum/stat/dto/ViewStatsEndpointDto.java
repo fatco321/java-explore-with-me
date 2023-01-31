@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-public class ViewStats {
+public class ViewStatsEndpointDto {
     private String app;
     private String uri;
     private Integer hits;

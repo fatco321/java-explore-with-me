@@ -2,7 +2,8 @@ package ru.practicum.stat.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.stat.dto.ViewStats;
+import ru.practicum.stat.dto.EndpointHitInputDto;
+import ru.practicum.stat.dto.ViewStatsEndpointDto;
 import ru.practicum.stat.entity.EndpointHit;
 import ru.practicum.stat.repository.StatRepository;
 
@@ -16,26 +17,27 @@ import java.util.List;
 public class StatService {
     private final StatRepository repository;
 
-    public void createEndpointHit(EndpointHit endpointHit) {
-        repository.save(endpointHit);
+    public void createEndpointHit(EndpointHitInputDto endpointHitInputDto) {
+        repository.save(new EndpointHit(endpointHitInputDto.getApp(),
+                endpointHitInputDto.getUri(), endpointHitInputDto.getIp(), endpointHitInputDto.getTimestamp()));
     }
 
-    public List<ViewStats> getStat(LocalDateTime startTime, LocalDateTime endTime, List<String> urls, Boolean unique) {
-        List<ViewStats> result = new ArrayList<>();
+    public List<ViewStatsEndpointDto> getStat(LocalDateTime startTime, LocalDateTime endTime, List<String> urls, Boolean unique) {
+        List<ViewStatsEndpointDto> result = new ArrayList<>();
         if (unique) {
             for (String uri : urls) {
-                ViewStats viewStats = new ViewStats(repository.findAppByUri(uri), uri,
+                ViewStatsEndpointDto viewStatsEndpointDto = new ViewStatsEndpointDto(repository.findAppByUri(uri), uri,
                         repository.getHitCountUnique(startTime, endTime, uri));
-                result.add(viewStats);
+                result.add(viewStatsEndpointDto);
             }
         } else {
             for (String uri : urls) {
-                ViewStats viewStats = new ViewStats(repository.findAppByUri(uri), uri,
+                ViewStatsEndpointDto viewStatsEndpointDto = new ViewStatsEndpointDto(repository.findAppByUri(uri), uri,
                         repository.getHitCountAll(startTime, endTime, uri));
-                result.add(viewStats);
+                result.add(viewStatsEndpointDto);
             }
         }
-        result.sort(Comparator.comparing(ViewStats::getHits).reversed());
+        result.sort(Comparator.comparing(ViewStatsEndpointDto::getHits).reversed());
         return result;
     }
 }

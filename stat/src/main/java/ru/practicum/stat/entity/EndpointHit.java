@@ -1,7 +1,5 @@
 package ru.practicum.stat.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,17 +16,19 @@ public class EndpointHit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Column(name = "app")
+    @Column(name = "app", length = 512)
     private String app;
-    @NotNull
-    @Column(name = "uri")
+    @Column(name = "uri", length = 512)
     private String uri;
-    @NotNull
-    @Column(name = "ip")
+    @Column(name = "ip", length = 512)
     private String ip;
-    @NotNull
     @Column(name = "timestamp")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
+
+    public EndpointHit(String app, String uri, String ip, LocalDateTime timestamp) {
+        this.app = app;
+        this.uri = uri;
+        this.ip = ip;
+        this.timestamp = timestamp;
+    }
 }
