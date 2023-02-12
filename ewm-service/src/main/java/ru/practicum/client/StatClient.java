@@ -10,7 +10,7 @@ import ru.practicum.dto.ViewStatsEndpointDto;
 
 import java.util.List;
 
-@FeignClient(value = "stat", url = "http://localhost:9090")
+@FeignClient(value = "stat", url = "${feign.url}")
 public interface StatClient {
 
     @GetMapping("/stats?start={start}&end={end}&uris={uris}&unique={unique}")
