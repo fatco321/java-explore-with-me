@@ -100,7 +100,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ApiError handle(DataIntegrityViolationException e){
+    public ApiError handle(DataIntegrityViolationException e) {
         log.warn(e.getMessage());
         return new ApiError(e.getMessage(),
                 HttpStatus.CONFLICT.getReasonPhrase(),
