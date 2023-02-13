@@ -8,6 +8,8 @@ import ru.practicum.etc.util.Create;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
+import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class NewEventDto {
     @NotBlank(groups = {Create.class})
     @Size(max = 7000, min = 20)
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = TIME_PATTERN)
     private LocalDateTime eventDate;
     @NotNull(groups = {Create.class})
     private Location location;

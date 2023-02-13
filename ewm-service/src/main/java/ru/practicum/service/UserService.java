@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.UserDto;
 import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public UserDto createUser(UserDto userDto) {
         try {
             return UserMapper.fromUser(userRepository.save(UserMapper.fromDtoToUser(userDto)));
@@ -27,6 +29,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void delete(Long id) {
         userRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("User with id: " + id + " not found"));

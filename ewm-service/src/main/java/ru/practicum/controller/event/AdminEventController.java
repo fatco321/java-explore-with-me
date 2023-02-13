@@ -10,6 +10,8 @@ import ru.practicum.dto.UpdateEventAdminRequest;
 import ru.practicum.etc.State;
 import ru.practicum.service.EventService;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +40,8 @@ public class AdminEventController {
                                            @RequestParam(defaultValue = "") Set<Long> categories,
                                            @RequestParam(defaultValue = "") @DateTimeFormat(pattern = TIME_PATTERN) LocalDateTime rangeStart,
                                            @RequestParam(defaultValue = "") @DateTimeFormat(pattern = TIME_PATTERN) LocalDateTime rangeEnd,
-                                           @RequestParam(defaultValue = "0") int from,
-                                           @RequestParam(defaultValue = "10") int size) {
+                                           @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                           @Positive @RequestParam(defaultValue = "10") int size) {
         log.info("admin get all events with param: users: {}, states: {}, categories:{}, range start: {}, range end: {}, from: {}, size: {}",
                 users, states, categories, rangeStart, rangeEnd, from, size);
         return service.getAllByAdmin(new ArrayList<>(users), states.stream().map(State::valueOf).collect(Collectors.toList()),

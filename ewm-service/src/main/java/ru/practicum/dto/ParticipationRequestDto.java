@@ -9,13 +9,15 @@ import ru.practicum.etc.Status;
 
 import java.time.LocalDateTime;
 
+import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParticipationRequestDto {
     private Long id;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = TIME_PATTERN)
     private LocalDateTime created;
     private Long event;
     private Long requester;

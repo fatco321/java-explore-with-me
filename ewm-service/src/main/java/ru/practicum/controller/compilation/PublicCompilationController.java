@@ -27,7 +27,7 @@ public class PublicCompilationController {
     }
 
     @GetMapping("/{id}")
-    private CompilationDto getById(@PathVariable Long id) {
+    public CompilationDto getById(@PathVariable Long id) {
         log.info("get compilation with id: {}", id);
         return service.getById(id);
     }

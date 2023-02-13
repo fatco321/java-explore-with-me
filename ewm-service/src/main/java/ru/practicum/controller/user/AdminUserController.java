@@ -10,6 +10,8 @@ import ru.practicum.dto.UserDto;
 import ru.practicum.etc.util.Create;
 import ru.practicum.service.UserService;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class AdminUserController {
 
     @GetMapping
     public Collection<UserDto> getAll(@RequestParam(required = false) List<Long> ids,
-                                      @RequestParam(defaultValue = "0") int from,
-                                      @RequestParam(defaultValue = "10") int size) {
+                                      @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                      @Positive @RequestParam(defaultValue = "10") int size) {
         log.info("admin get all users with ids: {} with param: from: {}, size: {}", ids, from, size);
         return service.getUsers(ids, PageRequest.of(from, size));
     }

@@ -12,6 +12,8 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class UpdateUserEvent {
     private Long category;
     @Size(max = 7000, min = 20)
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = TIME_PATTERN)
     private LocalDateTime eventDate;
     private Location location;
     private Boolean paid;

@@ -2,6 +2,7 @@ package ru.practicum.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.ParticipationRequestDto;
 import ru.practicum.entity.Event;
 import ru.practicum.entity.Request;
@@ -32,6 +33,7 @@ public class RequestService {
                 .map(requestMapper::fromRequest).collect(Collectors.toList());
     }
 
+    @Transactional
     public ParticipationRequestDto create(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> {
             throw new NotFoundException("event with id:" + eventId + " not found");
@@ -57,6 +59,7 @@ public class RequestService {
         return requestMapper.fromRequest(requestRepository.save(request));
     }
 
+    @Transactional
     public ParticipationRequestDto cancel(Long userId, Long requestId) {
         Request request = requestRepository.findByIdAndRequesterId(requestId, userId).orElseThrow(() ->
                 new NotFoundException("request not found"));

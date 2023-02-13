@@ -30,7 +30,7 @@ public class PublicEventController {
     private final StatsService statsService;
 
     @GetMapping("/{id}")
-    private EventFullDto getById(@PathVariable Long id, HttpServletRequest request) {
+    public EventFullDto getById(@PathVariable Long id, HttpServletRequest request) {
         log.info("public get event with id:{}", id);
         statsService.setHits(request.getRequestURI(), request.getRemoteAddr());
         return service.getById(id);

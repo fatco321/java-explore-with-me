@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.*;
 import ru.practicum.entity.*;
 import ru.practicum.etc.State;
@@ -40,6 +41,7 @@ public class EventService {
     private final CategoryRepository categoryRepository;
     private final LocationRepository locationRepository;
 
+    @Transactional
     public EventFullDto create(Long userId, NewEventDto newEventDto) {
         if (newEventDto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             throw new ConflictException("invalid event date");
@@ -59,6 +61,7 @@ public class EventService {
         return mapper.toEventFull(event);
     }
 
+    @Transactional
     public EventFullDto updateByUser(Long userId, Long eventId, UpdateUserEvent eventRequestDto) {
         Event event = eventRepository.findAllByInitiatorIdAndId(userId, eventId).orElseThrow(() ->
                 new NotFoundException("event with id: " + eventId + " not found"));
@@ -108,6 +111,7 @@ public class EventService {
         return mapper.toEventFull(event);
     }
 
+    @Transactional
     public EventFullDto updateAdmin(Long eventId, UpdateEventAdminRequest eventRequestDto) {
         Event event = eventRepository.findById(eventId).orElseThrow(() ->
                 new NotFoundException("event with id: " + eventId + " not found"));
@@ -230,6 +234,7 @@ public class EventService {
                 .map(requestMapper::fromRequest).collect(Collectors.toList());
     }
 
+    @Transactional
     public EventRequestStatusUpdateResult updateRequests(Long userId, Long eventId, EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
         userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
         Event event = eventRepository.findById(eventId).orElseThrow(() ->

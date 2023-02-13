@@ -3,6 +3,7 @@ package ru.practicum.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.CompilationDto;
 import ru.practicum.dto.NewCompilationDto;
 import ru.practicum.entity.Compilation;
@@ -25,6 +26,7 @@ public class CompilationService {
     private final EventRepository eventRepository;
     private final CompilationMapper mapper;
 
+    @Transactional
     public CompilationDto create(NewCompilationDto newCompilationDto) {
         if (compilationRepository.existsByTitle(newCompilationDto.getTitle())) {
             throw new ConflictException("Compilation with title: " + newCompilationDto.getTitle() + " already exist");
@@ -43,6 +45,7 @@ public class CompilationService {
                 new NotFoundException("Compilation with id:" + id + " not found")));
     }
 
+    @Transactional
     public CompilationDto update(Long id, NewCompilationDto newCompilationDto) {
         Compilation compilation = compilationRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Compilation with id:" + id + " not found"));
@@ -60,6 +63,7 @@ public class CompilationService {
         return mapper.toCompilationDto(compilationRepository.save(compilation));
     }
 
+    @Transactional
     public void delete(Long id) {
         compilationRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Compilation with id:" + id + " not found"));

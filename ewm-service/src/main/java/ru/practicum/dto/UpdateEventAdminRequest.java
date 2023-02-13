@@ -7,6 +7,8 @@ import ru.practicum.etc.StateActionAdmin;
 
 import java.time.LocalDateTime;
 
+import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
+
 @Getter
 @Setter
 @ToString
@@ -16,7 +18,7 @@ public class UpdateEventAdminRequest {
     private String annotation;
     private Long category;
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = TIME_PATTERN)
     private LocalDateTime eventDate;
     private Location location;
     private Boolean paid;

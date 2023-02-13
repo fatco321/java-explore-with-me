@@ -1,10 +1,10 @@
 package ru.practicum.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.CategoryDto;
 import ru.practicum.dto.NewCategoryDto;
 import ru.practicum.entity.Category;
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public CategoryDto createCategory(NewCategoryDto categoryDto) {
         if (categoryRepository.existsByName(categoryDto.getName())) {
             throw new ConflictException("Category with name: " + categoryDto.getName() + " already exist");
@@ -33,16 +34,16 @@ public class CategoryService {
                 new NotFoundException("Category with id: " + id + " not found")));
     }
 
+    @Transactional
     public void deleteCategory(Long id) {
         try {
             categoryRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("category with id: " + id + " not found");
-        } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Category not empty");
         }
     }
 
+    @Transactional
     public CategoryDto updateCategory(Long id, NewCategoryDto categoryDto) {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Category with id: " + id + " not found"));

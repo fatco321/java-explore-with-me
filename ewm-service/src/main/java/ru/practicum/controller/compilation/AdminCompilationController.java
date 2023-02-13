@@ -26,13 +26,13 @@ public class AdminCompilationController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         log.info("delete compilation with id: {}", id);
         service.delete(id);
     }
 
     @PatchMapping("/{id}")
-    private CompilationDto update(@PathVariable Long id,
+    public CompilationDto update(@PathVariable Long id,
                                   @RequestBody NewCompilationDto compilationDto) {
         log.info("update compilation with id: {} to {}", id, compilationDto);
         return service.update(id, compilationDto);

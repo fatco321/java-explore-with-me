@@ -10,6 +10,8 @@ import ru.practicum.dto.*;
 import ru.practicum.etc.util.Create;
 import ru.practicum.service.EventService;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
 
 @RestController
@@ -35,9 +37,9 @@ public class PrivateEventController {
     }
 
     @GetMapping
-    private Collection<EventFullDto> getUserEvents(@PathVariable Long userId,
-                                                   @RequestParam(defaultValue = "0") int from,
-                                                   @RequestParam(defaultValue = "10") int size) {
+    public Collection<EventFullDto> getUserEvents(@PathVariable Long userId,
+                                                  @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                  @Positive @RequestParam(defaultValue = "10") int size) {
         log.info("user gets all his events with param: from: {}, size: {}", from, size);
         return service.getByUser(userId, PageRequest.of(from, size));
     }
@@ -50,8 +52,8 @@ public class PrivateEventController {
     }
 
     @GetMapping("/{eventId}/requests")
-    private Collection<ParticipationRequestDto> getUserEventRequest(@PathVariable Long userId,
-                                                                    @PathVariable Long eventId) {
+    public Collection<ParticipationRequestDto> getUserEventRequest(@PathVariable Long userId,
+                                                                   @PathVariable Long eventId) {
         log.info("user with id: {} get all his requests to event with id: {}", userId, eventId);
         return service.getParticipationRequestsUser(userId, eventId);
     }

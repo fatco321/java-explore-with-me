@@ -18,7 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "annotation")
+    @Column(name = "annotation",nullable = false)
     private String annotation;
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -30,14 +30,14 @@ public class Event {
     private User initiator;
     @Column(name = "description")
     private String description;
-    @Column(name = "title")
+    @Column(name = "title",nullable = false)
     private String title;
-    @Column(name = "event_date")
+    @Column(name = "event_date",nullable = false)
     private LocalDateTime eventDate;
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
-    @Column(name = "paid")
+    @Column(name = "paid",nullable = false)
     private Boolean paid;
     @Column(name = "participant_limit")
     private Integer participantLimit;
