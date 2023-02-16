@@ -7,166 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Создание нового пользователя",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-							"});\r",
-							"pm.test(\"Test create user\", function () {\r",
-							"     var jsonData = pm.response.json();\r",
-							"      pm.expect(jsonData.email, '\"email\" field').to.eql('ivan@ya.ru');\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"ivan\",\r\n    \"email\" : \"ivan@ya.ru\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/users",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание второго нового пользователя",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
-							"});\r",
-							"pm.test(\"Test create user\", function () {\r",
-							"     var jsonData = pm.response.json();\r",
-							"      pm.expect(jsonData.email, '\"email\" field').to.eql('marina@ya.ru');\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"marina\",\r\n    \"email\" : \"marina@ya.ru\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/users",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание третьего нового пользователя",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
-							"});\r",
-							"pm.test(\"Test create user\", function () {\r",
-							"     var jsonData = pm.response.json();\r",
-							"      pm.expect(jsonData.email, '\"email\" field').to.eql('ilya@ya.ru');\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"ilya\",\r\n    \"email\" : \"ilya@ya.ru\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/users",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Лайк несуществующему событию",
+			"name": "Like несуществующему событию",
 			"event": [
 				{
 					"listen": "test",
@@ -174,253 +15,6 @@
 						"exec": [
 							"pm.test(\"Status code is 404\", function () {\r",
 							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/users/1/like/1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"users",
-						"1",
-						"like",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "dislike несуществующему событию",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 404\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/users/1/dislike/1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"users",
-						"1",
-						"dislike",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание категории",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/categories",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"categories"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание нового события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"annotation\": \"111111111111111111111111111111111111111111111\",\r\n    \"category\": 1,\r\n    \"description\": \"11111111111111111111111111111111111111111111111111.\",\r\n    \"eventDate\": \"2040-12-12 12:12:12\",\r\n    \"location\": {\r\n        \"lat\": 20.20,\r\n        \"lon\": 40.40\r\n    },\r\n    \"padi\": false,\r\n    \"participantLimit\": 1000,\r\n    \"requestModeration\": false,\r\n    \"title\": \"11111111111111111111111111111\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/users/:userId/events",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"users",
-						":userId",
-						"events"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание второго нового события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"annotation\": \"2222222222222222222222222222\",\r\n    \"category\": 1,\r\n    \"description\": \"222222222222222222222222222222222222\",\r\n    \"eventDate\": \"2040-12-12 12:12:12\",\r\n    \"location\": {\r\n        \"lat\": 20.20,\r\n        \"lon\": 40.40\r\n    },\r\n    \"padi\": false,\r\n    \"participantLimit\": 1000,\r\n    \"requestModeration\": false,\r\n    \"title\": \"22222222222222222222222222222222222222\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/users/:userId/events",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"users",
-						":userId",
-						"events"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "2"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Создание третьего нового события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"annotation\": \"333333333333333333333333333333333333333\",\r\n    \"category\": 1,\r\n    \"description\": \"33333333333333333333333333333333333333\",\r\n    \"eventDate\": \"2040-12-12 12:12:12\",\r\n    \"location\": {\r\n        \"lat\": 20.20,\r\n        \"lon\": 40.40\r\n    },\r\n    \"padi\": false,\r\n    \"participantLimit\": 1000,\r\n    \"requestModeration\": false,\r\n    \"title\": \"3333333333333333333333333333333333333\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/users/:userId/events",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"users",
-						":userId",
-						"events"
-					],
-					"variable": [
-						{
-							"key": "userId",
-							"value": "3"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление лайка от первого пользователя второму событию которое еще не опубликовано",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 409\", ()=>{\r",
-							"    pm.response.to.be.error;\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -448,7 +42,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "2"
+							"value": "647456"
 						}
 					]
 				}
@@ -456,14 +50,14 @@
 			"response": []
 		},
 		{
-			"name": "Публикация первого события",
+			"name": "dislike несуществующему событию",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is Ok\",()=>{\r",
-							"pm.response.to.be.ok;\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -473,76 +67,70 @@
 			"request": {
 				"method": "PATCH",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{baseUrl}}/admin/events/:eventId",
+					"raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"admin",
-						"events",
+						"users",
+						":userId",
+						"dislike",
 						":eventId"
 					],
 					"variable": [
 						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
 							"key": "eventId",
+							"value": "786554"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пользователь ставит like не опубликованному событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Conflict\",()=>{\r",
+							"  pm.response.to.have.status(409);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
 							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Публикация второго события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is Ok\",()=>{\r",
-							"pm.response.to.be.ok;\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/events/:eventId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"events",
-						":eventId"
-					],
-					"variable": [
+						},
 						{
 							"key": "eventId",
-							"value": "2"
+							"value": "5"
 						}
 					]
 				}
@@ -550,54 +138,7 @@
 			"response": []
 		},
 		{
-			"name": "Публикация тертьего события",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is Ok\",()=>{\r",
-							"pm.response.to.be.ok;\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/admin/events/:eventId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"admin",
-						"events",
-						":eventId"
-					],
-					"variable": [
-						{
-							"key": "eventId",
-							"value": "3"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Первый пользователь ставит like второму событию",
+			"name": "Первый пользователь ставит like третьему событию",
 			"event": [
 				{
 					"listen": "test",
@@ -636,7 +177,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "2"
+							"value": "3"
 						}
 					]
 				}
@@ -644,7 +185,7 @@
 			"response": []
 		},
 		{
-			"name": "Второй пользователь ставит дизлайк первому событию",
+			"name": "Второй пользователь ставит dislike первому событию",
 			"event": [
 				{
 					"listen": "test",
@@ -702,10 +243,10 @@
 							"});\r",
 							"pm.test(\"Тест получения списка популярных событий\",()=>{\r",
 							" var jsonData = pm.response.json();\r",
-							" pm.expect(jsonData.length, 'events count in total').to.eql(3);\r",
+							" pm.expect(jsonData.length, 'events count in total').to.eql(10);\r",
 							" pm.expect(jsonData[0].raiting, 'result[0]: \"raiting\" field').to.eql(1);\r",
 							"  pm.expect(jsonData[1].raiting, 'result[1]: \"raiting\" field').to.eql(0);\r",
-							"   pm.expect(jsonData[2].raiting, 'result[2]: \"raiting\" field').to.eql(-1);\r",
+							"   pm.expect(jsonData[9].raiting, 'result[9]: \"raiting\" field').to.eql(-1);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -740,10 +281,8 @@
 							"});\r",
 							"pm.test(\"Получение списка популярных пользователей\",()=>{\r",
 							" var jsonData = pm.response.json();\r",
-							"  pm.expect(jsonData.length, 'users count in total').to.eql(3),\r",
-							"  pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql(\"marina\");\r",
-							"  pm.expect(jsonData[1].name, 'result[1]: \"name\" field').to.eql(\"ilya\");\r",
-							"   pm.expect(jsonData[2].name, 'result[2]: \"name\" field').to.eql(\"ivan\");\r",
+							"  pm.expect(jsonData[0].raiting, 'result[0]: \"taiting\" field').to.eql(1);\r",
+							"  pm.expect(jsonData[1].raiting, 'result[1]: \"taiting\" field').to.eql(0);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -778,7 +317,7 @@
 							"});\r",
 							"pm.test(\"Получение события\",()=>{\r",
 							"var jsonData = pm.response.json();\r",
-							"     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(2);\r",
+							"     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(3);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -851,7 +390,7 @@
 			"response": []
 		},
 		{
-			"name": "Первый пользователь удаляет like у второго события",
+			"name": "Первый пользователь удаляет like у третьего события",
 			"event": [
 				{
 					"listen": "test",
@@ -886,7 +425,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "2"
+							"value": "3"
 						}
 					]
 				}
