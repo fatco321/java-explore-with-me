@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
 
@@ -15,6 +16,7 @@ import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
 @Builder
 public class EventShortDto {
     private Long id;
+    private Long raiting;
     private String title;
     private String annotation;
     private CategoryDto category;
@@ -26,4 +28,6 @@ public class EventShortDto {
     private Long views;
     @JsonIgnore
     private Integer participantLimit;
+    private Set<UserShortDto> likes;
+    private Set<UserShortDto> dislikes;
 }

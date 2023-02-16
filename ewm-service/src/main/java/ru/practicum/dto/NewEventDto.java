@@ -13,6 +13,7 @@ import static ru.practicum.etc.util.TimePattern.TIME_PATTERN;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @Builder
