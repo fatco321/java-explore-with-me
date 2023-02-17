@@ -15,6 +15,8 @@ import ru.practicum.service.StatsService;
 import ru.practicum.storage.RequestRepository;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -37,15 +39,16 @@ public class EventMapper {
         return new Event(newEventDto.getId(), newEventDto.getAnnotation(), category, LocalDateTime.now(),
                 user, newEventDto.getDescription(), newEventDto.getTitle(), newEventDto.getEventDate(),
                 location, newEventDto.isPaid(), newEventDto.getParticipantLimit(), LocalDateTime.now(), newEventDto.isRequestModeration(),
-                State.PENDING);
+                State.PENDING, new HashSet<>(), new HashSet<>());
     }
 
     public EventShortDto toShortEvent(Event event) {
         Long confirmed = (long) requestRepository.findAllByEventIdAndStatus(event.getId(), Status.CONFIRMED).size();
         Long views = statsService.getViews("/events/" + event.getId());
-        return new EventShortDto(event.getId(), event.getTitle(), event.getAnnotation(),
+        return new EventShortDto(event.getId(), (long) (event.getLikes().size() - event.getDislikes().size()), event.getTitle(), event.getAnnotation(),
                 CategoryMapper.fromCategory(event.getCategory()), confirmed, event.getEventDate(),
                 UserMapper.fromUserToShortUser(event.getInitiator()), event.getPaid(),
-                views, event.getParticipantLimit());
+                views, event.getParticipantLimit(), event.getLikes().stream().map(UserMapper::fromUserToShortUser).collect(Collectors.toSet()),
+                event.getDislikes().stream().map(UserMapper::fromUserToShortUser).collect(Collectors.toSet()));
     }
 }

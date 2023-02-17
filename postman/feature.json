@@ -1,0 +1,569 @@
+{
+	"info": {
+		"_postman_id": "1f10eaa5-166d-4d1a-bd19-a8b8e46d1c8f",
+		"name": "feature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21606770"
+	},
+	"item": [
+		{
+			"name": "Like несуществующему событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "647456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dislike несуществующему событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"dislike",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "786554"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пользователь ставит like не опубликованному событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Conflict\",()=>{\r",
+							"  pm.response.to.have.status(409);\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Первый пользователь ставит like третьему событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Должено вернуться событие c рейтингом 1\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.raiting, '\"raiting\" field').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Второй пользователь ставит dislike первому событию",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Должено вернуться событие c рейтингом 1\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.raiting, '\"raiting\" field').to.eql(-1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"dislike",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение самых популярных событий",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is Ok\",()=>{\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Тест получения списка популярных событий\",()=>{\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData.length, 'events count in total').to.eql(10);\r",
+							" pm.expect(jsonData[0].raiting, 'result[0]: \"raiting\" field').to.eql(1);\r",
+							"  pm.expect(jsonData[1].raiting, 'result[1]: \"raiting\" field').to.eql(0);\r",
+							"   pm.expect(jsonData[9].raiting, 'result[9]: \"raiting\" field').to.eql(-1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/raiting/events",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"raiting",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получиение пользователей по рейтингу",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Получение списка популярных пользователей\",()=>{\r",
+							" var jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData[0].raiting, 'result[0]: \"taiting\" field').to.eql(1);\r",
+							"  pm.expect(jsonData[1].raiting, 'result[1]: \"taiting\" field').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/raiting/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"raiting",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пользователь получает список понравившихся событий",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Получение события\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение списка не понравившихся событий",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Получение события\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/dislike",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"dislike"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Первый пользователь удаляет like у третьего события",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "eventId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пользователь получает список понравившихся событий после удаления",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Получение события\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/like",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"like"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Второй пользователь удаляет dislike у первого события",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"dislike",
+						":eventId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение списка не понравившихся событий после удаления dislike",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is Ok\",()=>{\r",
+							"pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Получение события\",()=>{\r",
+							"var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/:userId/dislike",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						":userId",
+						"dislike"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

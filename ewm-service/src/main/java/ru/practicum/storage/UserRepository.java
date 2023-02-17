@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByIdIsIn(List<Long> id, Pageable pageable);
+
+    List<User> findAllSortByOrderByRaitingDesc(Pageable pageable);
 }
