@@ -28,7 +28,7 @@ public class LikeService {
     private final EventMapper eventMapper;
 
 
-    public EventShortDto toLike(Long userId, Long eventId) {
+    public EventShortDto addLike(Long userId, Long eventId) {
         User user = getUser(userId);
         Event event = getEvent(eventId);
         if (event.getState().equals(State.PUBLISHED)) {
@@ -56,7 +56,7 @@ public class LikeService {
     }
 
 
-    public EventShortDto toDislike(Long userId, Long eventId) {
+    public EventShortDto addDislike(Long userId, Long eventId) {
         User user = getUser(userId);
         Event event = getEvent(eventId);
         if (event.getState().equals(State.PUBLISHED)) {

@@ -16,10 +16,10 @@ public class PrivateLikeController {
     private final LikeService likeService;
 
     @PatchMapping("/like/{eventId}")
-    public EventShortDto toLike(@PathVariable Long userId,
-                                @PathVariable Long eventId) {
+    public EventShortDto addLike(@PathVariable Long userId,
+                                 @PathVariable Long eventId) {
         log.info("user with id {} to like event {}", userId, eventId);
-        return likeService.toLike(userId, eventId);
+        return likeService.addLike(userId, eventId);
     }
 
     @DeleteMapping("/like/{eventId}")
@@ -36,16 +36,16 @@ public class PrivateLikeController {
     }
 
     @GetMapping("/dislike")
-    private Collection<EventShortDto> getUserDislikesEvents(@PathVariable Long userId) {
+    public Collection<EventShortDto> getUserDislikesEvents(@PathVariable Long userId) {
         log.info("user with id {} get disliked event", userId);
         return likeService.getUserDislikesEvents(userId);
     }
 
     @PatchMapping("/dislike/{eventId}")
-    public EventShortDto toDislike(@PathVariable Long userId,
-                                   @PathVariable Long eventId) {
+    public EventShortDto addDislike(@PathVariable Long userId,
+                                    @PathVariable Long eventId) {
         log.info("user {} dislike event {}", userId, eventId);
-        return likeService.toDislike(userId, eventId);
+        return likeService.addDislike(userId, eventId);
     }
 
     @DeleteMapping("/dislike/{eventId}")
